@@ -3,8 +3,6 @@ import pennylane as qml
 
 
 
-
-
 # Hamiltonian definition H = sum_i (- Z_i * Z_{i+1})
 def generate_Hamiltonian(N):
     coeffs = -1 * np.ones((N,))
