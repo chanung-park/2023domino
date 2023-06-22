@@ -12,7 +12,7 @@ def generate_Hamiltonian(N):
     print(H)
     return H 
 
-def find_groundstate(N, p, state_circuit, H, max_iterations = 300, conv_tol = 1e-06):
+def find_groundstate(N, p, state_circuit, H, max_iterations = 300, conv_tol = 1e-06, param = None):
     # call device 
     dev = qml.device("default.qubit", wires = N )
     
@@ -23,8 +23,10 @@ def find_groundstate(N, p, state_circuit, H, max_iterations = 300, conv_tol = 1e
         return qml.expval(H)
     # define optimizer
     opt = qml.GradientDescentOptimizer(stepsize = 0.1 )
+    
     # start with random parameter 
-    param = np.random.randn(p, 2*N, requires_grad = True) # size is define through state circuit 
+    if param is None: 
+        param = np.random.randn(p, 2*N, requires_grad = True) # size is define through state circuit 
 
     energy = [cost_fn(param)]
     for n in range(max_iterations):
